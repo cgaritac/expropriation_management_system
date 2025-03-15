@@ -1,0 +1,69 @@
+﻿@model IEnumerable<GestionExpropaciones.Models.ProjectModel>
+@using GestionExpropaciones.Common.Helpers
+@using GestionExpropaciones.Common
+@inject Constants Constants
+@{
+    ViewData["Title"] = "Proyectos";
+    bool isLoading = ViewBag.IsLoading ?? false;
+    int pageNumber = ViewBag.PageNumber;
+    int totalPages = ViewBag.TotalPages;
+    int totalCount = ViewBag.TotalCount;
+    string searchTerm = ViewBag.SearchTerm ?? "";
+}
+
+<section class="max-width-container d-flex justify-content-end mb-2 mt-4">
+    <a class="btn custom-button-addFile fw-bold regular-button" asp-action="Create">Nuevo Proyecto</a>
+</section>
+
+<section class="max-width-container table-responsive">
+    <div class="table-container border-start border-bottom border-end">
+        <table class="table table-bordered border-3 table-striped table-hover">
+            <thead class="table-header">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Id)</th>
+                    <th>@Html.DisplayNameFor(model => model.Number)</th>
+                    <th>@Html.DisplayNameFor(model => model.Name)</th>
+                    <th>@Html.DisplayNameFor(model => model.Comments)</th>
+                    <th>@Constants.ActionsText</th>
+                </tr>
+            </thead>
+
+            <tbody class="table-group-divider">
+                @if (isLoading)
+                {
+                    <partial name="_SkeletonLoader" />
+                }
+                else if (Model != null && Model.Any())
+                {
+                    @foreach (var project in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => project.Id)</td>
+                            <td>@Html.DisplayFor(modelItem => project.Number)</td>
+                            <td>@Html.DisplayFor(modelItem => project.Name)</td>
+                            <td class="table-comments" title="@project.Comments">@project.Comments</td>
+                            <td class="d-flex">
+                                <a asp-controller="Project" asp-action="Edit" asp-route-id="@project.Id" title="Editar" class="btn btn-sm text-white custom-button-menu me-1">
+                                    @IconHelper.EditIcon()
+                                </a>
+                                <form asp-action="Delete" asp-route-id="@project.Id" method="post">
+                                    <button type="submit" class="btn btn-sm text-white custom-button-delete ms-1" title="Borrar proyecto" onclick="return confirm('¿Estás seguro de que deseas eliminar este expediente?');">
+                                        @IconHelper.DeleteIcon()
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center">@Constants.NoDataTablePlaceholder</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @await Html.PartialAsync("_Pagination", (PageNumber: pageNumber, TotalPages: totalPages, totalCount: totalCount))
+</section>

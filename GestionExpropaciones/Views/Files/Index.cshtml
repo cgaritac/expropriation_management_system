@@ -1,0 +1,80 @@
+﻿@model IEnumerable<GestionExpropaciones.Models.FileModel>
+@using GestionExpropaciones.Common
+@using GestionExpropaciones.Common.Helpers
+@inject Constants Constants
+@{
+    ViewData["Title"] = @Constants.AppNameText;
+
+    bool isLoading = ViewBag.IsLoading ?? false;
+    int pageNumber = ViewBag.PageNumber;
+    int totalPages = ViewBag.TotalPages;
+    int totalCount = ViewBag.TotalCount;
+    string searchTerm = ViewBag.SearchTerm ?? "";
+}
+
+<section class="max-width-container d-flex justify-content-end mb-2 mt-4">
+    <a class="btn custom-button-addFile fw-bold regular-button" asp-action="Create">Nuevo Expediente</a>
+</section>
+
+<section class="max-width-container table-responsive">
+    <div class="table-container border-start border-bottom border-end">
+        <table class="table table-bordered border-3 table-striped table-hover">
+            <thead class="table-header">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.Number)</th>
+                    <th>@Html.DisplayNameFor(model => model.Project_Number)</th>
+                    <th>@Html.DisplayNameFor(model => model.Section)</th>
+                    <th>@Html.DisplayNameFor(model => model.Km)</th>
+                    <th>@Html.DisplayNameFor(model => model.Fase)</th>
+                    <th>@Html.DisplayNameFor(model => model.Status)</th>
+                    <th>@Html.DisplayNameFor(model => model.Start_Date)</th>
+                    <th>@Html.DisplayNameFor(model => model.Finish_Date)</th>
+                    <th>@Html.DisplayNameFor(model => model.Comments)</th>
+                    <th>@Constants.ActionsText</th>
+                </tr>
+            </thead>
+
+            <tbody class="table-group-divider">
+                @if (isLoading)
+                {
+                    <partial name="_SkeletonLoader" />
+                }
+                else if (Model != null && Model.Any())
+                {
+                    @foreach (var file in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => file.Number)</td>
+                            <td>@Html.DisplayFor(modelItem => file.Project_Number)</td>
+                            <td>@Html.DisplayFor(modelItem => file.Section)</td>
+                            <td>@Html.DisplayFor(modelItem => file.Km)</td>
+                            <td>@file.Fase_Description</td>
+                            <td>@file.Status_Description</td>
+                            <td>@Html.DisplayFor(modelItem => file.Start_Date)</td>
+                            <td>@(file.Finish_Date?.ToString("yyyy/MM/dd") ?? Constants.NotApplyText)</td>
+                            <td class="table-comments" title="@file.Comments">@file.Comments</td>
+                            <td class="d-flex">
+                                <a asp-controller="Menu" asp-action="Index" asp-route-id="@file.Id" title="Abrir menu" class="btn btn-sm text-white custom-button-menu me-1">
+                                   @IconHelper.MenuIcon()
+                                </a>
+                                <form asp-action="Delete" asp-route-id="@file.Id" method="post">
+                                    <button type="submit" class="btn btn-sm text-white custom-button-delete ms-1" title="Borrar expediente" onclick="return confirm('¿Estás seguro de que deseas eliminar este expediente?');">
+                                        @IconHelper.DeleteIcon()
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center">@Constants.NoDataTablePlaceholder</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div> 
+
+    @await Html.PartialAsync("_Pagination", (PageNumber: pageNumber, TotalPages: totalPages, totalCount: totalCount))
+</section>

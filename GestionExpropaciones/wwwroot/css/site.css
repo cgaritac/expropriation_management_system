@@ -1,0 +1,260 @@
+body {
+    font-size: 14px;
+    font-family: Helvetica, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    overflow: hidden;
+}
+
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+}
+
+.container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-button-addFile {
+    background-color: #080808;
+    color: #FFD400;
+    font-size: 14px;
+}
+
+    .custom-button-addFile:hover {
+        background-color: #161616;
+        color: white;
+    }
+
+.custom-button-create {
+    background-color: #FFD400;
+    font-size: 14px;
+}
+
+    .custom-button-create:hover {
+        background-color: #deb900;
+    }
+
+.custom-button-edit {
+    background-color: #FFD400;
+    font-size: 14px;
+}
+
+    .custom-button-edit:hover {
+        background-color: #deb900;
+    }
+
+.custom-button-delete {
+    background-color: #d30000;
+    font-size: 14px;
+}
+
+    .custom-button-delete:hover {
+        background-color: #be0101;
+    }
+
+.custom-button-cancel {
+    background-color: #d30000;
+    font-size: 14px;
+}
+
+    .custom-button-cancel:hover {
+        background-color: #be0101;
+    }
+
+.custom-button-menu {
+    background-color: #4d4d4d;
+    font-size: 14px;
+}
+
+    .custom-button-menu:hover {
+        background-color: #393939;
+    }
+
+.custom-input {
+    max-width: 205px;
+}
+
+footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+}
+
+.footer-stripe {
+    background-color: black;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    line-height: normal !important;
+}
+
+    .footer-stripe .page-footer {
+        color: #FFD400;
+        margin: 0;
+        text-align: center;
+        font-size: 14px;
+    }
+
+.form-container {
+    margin-bottom: 15px;
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-stripe {
+    background-color: black;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .header-stripe .page-title {
+        color: #FFD400;
+        font-size: 42px;
+        margin: 0;
+        text-align: center;
+    }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+/*html {
+  position: relative;
+  min-height: 100%;
+}*/
+
+.logout-button {
+    font-size: 14px;
+}
+
+main {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.max-width-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 15px;
+    box-sizing: border-box;
+}
+
+.menu-container {
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+#menuTabsContent {
+    max-height: calc(100vh - 370px);
+    overflow-y: auto;
+    padding-inline: 15px;
+    box-sizing: border-box;
+}
+
+.navbar-nav .nav-link:hover {
+    color: #FFD400 !important;
+}
+
+.nav-link.active {
+    background-color: #FFD400;
+}
+
+.pagination .page-item .page-link {
+    color: #000;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #FFD400;
+    border-color: #FFD400;
+    color: #000;
+    z-index: -9999;
+}
+
+.pagination .page-item.disabled .page-link {
+    background-color: #f8f9fa;
+    border-color: #ddd;
+    color: #6c757d;
+    cursor: not-allowed;
+}
+
+.pagination .page-item:not(.active):not(.disabled) .page-link:hover {
+    background-color: #fef6d0;
+    border-color: #ddd;
+}
+
+.regular-button {
+    font-size: 14px;
+}
+
+.skeleton-loader {
+    height: 20px;
+    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+    0% {
+        background-position: 200% 0;
+    }
+
+    100% {
+        background-position: -200% 0;
+    }
+}
+
+.table-container {
+    max-height: calc(100vh - 400px);
+    min-height: calc(100vh - 500px);
+    overflow-y: auto;
+}
+
+.table-container table {
+    width: 100%;
+    margin-bottom: 0;
+}
+
+.table-header {
+    background-color: #FFD400;
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.table-comments {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.toast-container {
+    position: fixed;
+    top: 10vw;
+    right: 0;
+    z-index: 9999;
+}
+
+.validation-texts {
+    height: 20px;
+}

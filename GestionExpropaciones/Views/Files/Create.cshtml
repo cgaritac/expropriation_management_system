@@ -1,0 +1,66 @@
+﻿@using GestionExpropaciones.Common
+@using GestionExpropaciones.Common.Helpers
+@inject Constants Constants
+@model GestionExpropaciones.Models.FileModel
+@{
+    ViewData["Title"] = @Constants.NewFilePage;
+
+    List<ProjectModel> projectList = ViewBag.ProjectList;
+}
+
+<form class="mt-5 fw-bold" asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Number">N° Expediente@(Constants.RequiredDerorator)</label>
+        <input class="form-control custom-input" type="text" asp-for="Number" />
+        <div class="validation-texts">
+            <span asp-validation-for="Number" class="text-danger"></span>
+        </div>        
+    </div>
+
+    <section class="d-flex justify-content-between fw-bold mt-1">
+        <div class="form-group">
+            <label asp-for="Project_Number">N° Proyecto@(Constants.RequiredDerorator)</label>
+            <select asp-for="Project_Number" class="form-select" id="projectnumberInput" >
+                <option value="">Seleccione un proyecto</option>
+                @foreach (ProjectModel project in projectList)
+                {
+                    <option value="@project.Number">@project.Name</option>
+                }
+            </select>
+            <div class="validation-texts">
+                <span asp-validation-for="Project_Number" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Section">Sección</label>
+            <input class="form-control" type="text" asp-for="Section" />
+            <div class="validation-texts">
+                <span asp-validation-for="Section" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Km">Kilómetro</label>
+            <input class="form-control" type="text" asp-for="Km" />
+            <div class="validation-texts">
+                <span asp-validation-for="Km" class="text-danger"></span>
+            </div>
+        </div>
+    </section>    
+
+    <div class="form-group mt-2">
+        <label asp-for="Comments">Comentarios</label>
+        <textarea class="form-control" rows="4" asp-for="Comments"></textarea>
+        <div class="validation-texts">
+            <span asp-validation-for="Comments" class="text-danger"></span>
+        </div>        
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-secondary mt-3 fw-bold regular-button" type="button" asp-controller="Files" asp-action="Index" method="get">
+            @IconHelper.ReturnIcon()
+        </a>
+        <button class="btn custom-button-create mt-3 fw-bold" type="submit">Crear</button>
+    </div>    
+</form>

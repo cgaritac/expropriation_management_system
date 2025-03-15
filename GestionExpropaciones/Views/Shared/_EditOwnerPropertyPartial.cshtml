@@ -1,0 +1,80 @@
+﻿@model IEnumerable<GestionExpropaciones.Models.OwnerPropertyModel>
+@using GestionExpropaciones.Common
+@using GestionExpropaciones.Common.Helpers
+@using GestionExpropaciones.Common.Enums
+@inject Constants Constants
+@{
+    var isLoading = false;
+    int pageNumber = ViewBag.PageNumber;
+    int totalPages = ViewBag.OwnerPropertyTotalPages;
+    int totalCount = ViewBag.OwnerPropertyTotalCount;
+    string searchTerm = ViewBag.SearchTerm ?? "";
+}
+
+<section class="max-width-container d-flex justify-content-between mb-2 mt-4">
+    <a class="btn btn-secondary fw-bold regular-button" type="button" asp-controller="Files" asp-action="Index" method="get" title="Regresar">
+        @IconHelper.ReturnIcon()
+    </a>
+    <a class="btn custom-button-addFile fw-bold regular-button" asp-controller="OwnerProperty" asp-action="Create">Nueva Propiedad</a>
+</section>
+
+<section class="max-width-container table-responsive">
+    <div class="table-container border-start border-bottom border-end">
+        <table class="table table-bordered border-3 table-striped table-hover">
+            <thead class="table-header">
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.CadastralMap_Number)</th>
+                    <th>@Html.DisplayNameFor(model => model.Folio_Number)</th>
+                    <th>@Html.DisplayNameFor(model => model.Province)</th>
+                    <th>@Html.DisplayNameFor(model => model.Canton)</th>
+                    <th>@Html.DisplayNameFor(model => model.District)</th>
+                    <th>@Html.DisplayNameFor(model => model.Area)</th>
+                    <th>@Html.DisplayNameFor(model => model.Annotation)</th>
+                    <th>@Html.DisplayNameFor(model => model.Comments)</th>
+                    <th>@Constants.ActionsText</th>
+                </tr>
+            </thead>
+
+            <tbody class="table-group-divider">
+                @if (isLoading)
+                {
+                    <partial name="_SkeletonLoader" />
+                }
+                else if (Model != null && Model.Any())
+                {
+                    @foreach (var ownerProperty in Model)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(modelItem => ownerProperty.CadastralMap_Number)</td>
+                            <td>@Html.DisplayFor(modelItem => ownerProperty.Folio_Number)</td>
+                            <td>@ownerProperty.Province</td>
+                            <td>@Html.DisplayFor(modelItem => ownerProperty.Canton)</td>
+                            <td>@Html.DisplayFor(modelItem => ownerProperty.District)</td>
+                            <td>@Html.DisplayFor(modelItem => ownerProperty.Area)</td>
+                            <td>@ownerProperty.Annotation</td>
+                            <td class="table-comments" title="@ownerProperty.Comments">@ownerProperty.Comments</td>
+                            <td class="d-flex">
+                                <a asp-controller="OwnerProperty" asp-action="Edit" asp-route-id="@ownerProperty.Id" title="Abrir formulario de edición" class="btn btn-sm text-white custom-button-menu me-1">
+                                    @IconHelper.EditIcon()
+                                </a>
+                                <form asp-controller="OwnerProperty" asp-action="Delete" asp-route-id="@ownerProperty.Id" method="post">
+                                    <button type="submit" class="btn btn-sm text-white custom-button-delete ms-1" title="Borrar propedad" onclick="return confirm('¿Estás seguro de que deseas eliminar esta propiedad');">
+                                        @IconHelper.DeleteIcon()
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="8" class="text-center">@Constants.NoDataTablePlaceholder</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    @await Html.PartialAsync("_Pagination", (PageNumber: pageNumber, TotalPages: totalPages, TotalCount: totalCount))
+</section>

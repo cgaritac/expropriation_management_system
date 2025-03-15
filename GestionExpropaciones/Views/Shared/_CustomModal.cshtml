@@ -1,0 +1,59 @@
+﻿@* <!-- Modal de Confirmación --> *@
+@* <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationModalLabel" aria-hidden="true"> *@
+@*     <div class="modal-dialog"> *@
+@*         <div class="modal-content"> *@
+@*             <div class="modal-header"> *@
+@*                 <h5 class="modal-title" id="deleteConfirmationModalLabel">Confirmar Eliminación</h5> *@
+@*                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> *@
+@*             </div> *@
+@*             <div class="modal-body"> *@
+@*                 ¿Estás seguro de que deseas eliminar este expediente? *@
+@*             </div> *@
+@*             <div class="modal-footer"> *@
+@*                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button> *@
+@*                 <button type="button" class="btn btn-danger" id="confirmDeleteButton">Eliminar</button> *@
+@*             </div> *@
+@*         </div> *@
+@*     </div> *@
+@* </div> *@
+
+
+@* @section Scripts { *@
+@*     <script> *@
+@*         document.addEventListener("DOMContentLoaded", function () { *@
+@*             // Manejar el clic en los botones de eliminación *@
+@*             document.querySelectorAll(".custom-button-delete").forEach(button => { *@
+@*                 button.addEventListener("click", function (event) { *@
+@*                     event.preventDefault(); // Evitar el comportamiento predeterminado del formulario *@
+
+@*                     const fileId = this.closest("form").querySelector("input[name='id']").value; // Obtener el ID del archivo *@
+@*                     const form = this.closest("form"); // Guardar referencia al formulario *@
+
+@*                     // Mostrar el modal de confirmación *@
+@*                     const deleteModal = new bootstrap.Modal(document.getElementById("deleteConfirmationModal")); *@
+@*                     deleteModal.show(); *@
+
+@*                     // Manejar el clic en el botón "Eliminar" del modal *@
+@*                     document.getElementById("confirmDeleteButton").onclick = function () { *@
+@*                         form.submit(); // Enviar el formulario cuando se confirma la eliminación *@
+@*                         deleteModal.hide(); // Ocultar el modal *@
+@*                     }; *@
+@*                 }); *@
+@*             }); *@
+@*         }); *@
+@*     </script> *@
+@* } *@
+
+
+@* <form asp-action="Delete" method="post" style="display: inline;"> *@
+@*     <input type="hidden" name="id" value="@file.Id" /> *@
+@*     <button type="submit" class="btn btn-sm text-white custom-button-delete ms-1"> *@
+@*         @IconHelper.DeleteIcon() *@
+@*     </button> *@
+@* </form> *@
+
+
+@* <div class="modal-body"> *@
+@*     <p>¿Estás seguro de que deseas eliminar el expediente <strong>@file.Number</strong>?</p> *@
+@*     <p class="text-danger">Esta acción no se puede deshacer.</p> *@
+@* </div> *@

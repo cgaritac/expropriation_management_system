@@ -1,0 +1,51 @@
+﻿@using GestionExpropaciones.Common.Helpers
+@model (int PageNumber, int TotalPages, int TotalCount)
+
+@{
+    int pageNumber = Model.PageNumber;
+    int totalPages = Model.TotalPages;
+    string searchTerm = ViewBag.SearchTerm ?? "";
+    int totalCount = Model.TotalCount;
+
+    var (startPage, endPage) = UtilityHelper.GetVisiblePages(pageNumber, totalPages);
+}
+
+
+<div class="d-flex justify-content-between align-content-center">
+    <p class="fw-bold"><span>@Math.Min(pageNumber * 10, totalCount)</span> de <span>@totalCount</span></p>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+            <li class="page-item @(pageNumber == 1 ? "disabled" : "")" title="Primera Página">
+                <a class="page-link" asp-action="Index" asp-route-pageNumber="1" asp-route-searchTerm="@searchTerm" aria-label="First">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <li class="page-item @(pageNumber == 1 ? "disabled" : "")" title="Página anterior">
+                <a class="page-link" asp-action="Index" asp-route-pageNumber="@(pageNumber - 1)" asp-route-searchTerm="@searchTerm" aria-label="Previous">
+                    <span aria-hidden="true">&lsaquo;</span>
+                </a>
+            </li>
+
+            @for (int i = startPage; i <= endPage; i++)
+            {
+                <li class="page-item @(i == pageNumber ? "active" : "")" title="Página @i">
+                    <a class="page-link" asp-action="Index" asp-route-pageNumber="@i" asp-route-searchTerm="@searchTerm">@i</a>
+                </li>
+            }
+
+            <li class="page-item @(pageNumber == totalPages ? "disabled" : "")" title="Página siguiente">
+                <a class="page-link" asp-action="Index" asp-route-pageNumber="@(pageNumber + 1)" asp-route-searchTerm="@searchTerm" aria-label="Next">
+                    <span aria-hidden="true">&rsaquo;</span>
+                </a>
+            </li>
+
+            <li class="page-item @(pageNumber == totalPages ? "disabled" : "")" title="Última página">
+                <a class="page-link" asp-action="Index" asp-route-pageNumber="@totalPages" asp-route-searchTerm="@searchTerm" aria-label="Last">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>

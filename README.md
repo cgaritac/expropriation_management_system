@@ -1,2 +1,2 @@
-# expropriation_management_system
-Expropriation management system made with c#
+# final_project
+University final project

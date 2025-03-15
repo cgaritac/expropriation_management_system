@@ -1,0 +1,80 @@
+﻿@model GestionExpropaciones.Models.FileModel
+
+@{
+    ViewData["Title"] = "Menú del Expediente " + @Model.Number;
+
+    var owners = ViewBag.Owners as IEnumerable<GestionExpropaciones.Models.OwnerModel>;
+    var paperWorks = ViewBag.PaperWorks as IEnumerable<GestionExpropaciones.Models.PaperWorkModel>;
+    var ownerProperties = ViewBag.OwnerProperties as IEnumerable<GestionExpropaciones.Models.OwnerPropertyModel>;
+    var appraisals = ViewBag.Appraisals as IEnumerable<GestionExpropaciones.Models.AppraisalModel>;
+    var expropiatedProperties = ViewBag.ExpropiatedProperties as IEnumerable<GestionExpropaciones.Models.ExpropiatedPropertyModel>;
+}
+
+<section class="max-width-container mt-4">
+    <ul class="nav nav-tabs" id="menuTabs" role="tablist">
+        <li class="nav-item" role="presentation">
+            <button class="nav-link active fw-bold text-black" id="file-tab" data-bs-toggle="tab" data-bs-target="#file" type="button" role="tab" aria-controls="file" aria-selected="true">
+                Expediente
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-black" id="owner-tab" data-bs-toggle="tab" data-bs-target="#owner" type="button" role="tab" aria-controls="owner" aria-selected="false">
+                Propetario
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-black" id="ownerProperty-tab" data-bs-toggle="tab" data-bs-target="#ownerProperty" type="button" role="tab" aria-controls="ownerProperty" aria-selected="false">
+                Finca Propietario
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-black" id="paperWork-tab" data-bs-toggle="tab" data-bs-target="#paperWork" type="button" role="tab" aria-controls="paperWork" aria-selected="false">
+                Trámites
+            </button>
+        </li>
+        <li class="nav-item" role="presentation"> 
+            <button class="nav-link fw-bold text-black" id="appraisal-tab" data-bs-toggle="tab" data-bs-target="#appraisal" type="button" role="tab" aria-controls="appraisal" aria-selected="false">
+                Avalúo
+            </button>
+        </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link fw-bold text-black" id="expropiatedProperty-tab" data-bs-toggle="tab" data-bs-target="#expropiatedProperty" type="button" role="tab" aria-controls="expropiatedProperty" aria-selected="false">
+                Finca Expropiada
+            </button>
+        </li>
+    </ul>
+
+    <div class="tab-content" id="menuTabsContent">
+        <div class="tab-pane fade show active" id="file" role="tabpanel" aria-labelledby="file-tab">
+            <partial name="_EditFilePartial" model="Model" />
+        </div>
+
+        <div class="tab-pane fade" id="owner" role="tabpanel" aria-labelledby="owner-tab">
+            @* <partial name="_EditOwnerPartial" model="owners" /> *@
+            @{
+                ViewBag.FileId = Model.Id;
+            }
+            @await Html.PartialAsync("_EditOwnerPartial", owners)
+        </div>
+
+        <div class="tab-pane fade" id="ownerProperty" role="tabpanel" aria-labelledby="ownerProperty-tab">
+            @* <partial name="_EditOwnerPropertyPartial" model="new OwnerPropertyModel { Id = Model.Id }" /> *@
+            @await Html.PartialAsync("_EditOwnerPropertyPartial", ownerProperties)
+        </div>
+
+        <div class="tab-pane fade" id="paperWork" role="tabpanel" aria-labelledby="paperWork-tab">
+            @* <partial name="_EditPaperWorkPartial" model="new PaperWorkModel { Id = Model.Id }" /> *@
+            @await Html.PartialAsync("_EditPaperWorkPartial", paperWorks)
+        </div>
+
+        <div class="tab-pane fade" id="appraisal" role="tabpanel" aria-labelledby="appraisal-tab">
+            @* <partial name="_EditAppraisalPartial" model="new AppraisalModel { Id = Model.Id }" /> *@
+            @await Html.PartialAsync("_EditAppraisalPartial", appraisals)
+        </div>
+
+        <div class="tab-pane fade" id="expropiatedProperty" role="tabpanel" aria-labelledby="expropiatedProperty-tab">
+            @* <partial name="_EditExpropiatedPropertyPartial" model="new ExpropiatedPropertyModel { Id = Model.Id }" /> *@
+            @await Html.PartialAsync("_EditExpropiatedPropertyPartial", expropiatedProperties)
+        </div>
+    </div>
+</section>

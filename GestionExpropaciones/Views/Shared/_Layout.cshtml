@@ -1,0 +1,79 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData[@Constants.TitlePageText] - @Constants.AppNameText</title>
+    <link href="~/images/favicon.png" rel="icon" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GestionExpropaciones.styles.css" asp-append-version="true" />
+</head>
+
+<body data-toast="@TempData["ToastMessage"]">
+    @using GestionExpropaciones.Common
+    @inject Constants Constants
+
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
+            <div class="container-fluid max-width-container">
+                <a class="navbar-brand" asp-area="" asp-controller="Files" asp-action="Index">
+                    <img src="~/images/CNCLogo.webp" alt="CNC Logo"/>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-end fw-bold">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Files" asp-action="Index">Inicio</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Project" asp-action="Index">Proyectos</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Reports" asp-action="Index">Reportes</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-5">
+                        <li class="nav-item">
+                            <form asp-controller="Auth" asp-action="Logout" method="post">
+                                <button type="submit" class="nav-link btn btn-link text-dark fw-bold logout-button">@Constants.LogoutText</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section class="header-stripe">
+            <div class="container">
+                <h1 class="page-title">@ViewData[Constants.TitlePageText]</h1>
+            </div>
+        </section>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted footer-stripe">
+        <div class="container page-footer">
+            &copy; 2025 - CNC - Sistema de Gestión de Expropiaciones
+        </div>
+    </footer>
+
+    @await Html.PartialAsync("_CustomToast")
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

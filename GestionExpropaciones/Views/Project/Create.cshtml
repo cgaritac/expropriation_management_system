@@ -1,0 +1,42 @@
+﻿@using GestionExpropaciones.Common
+@using GestionExpropaciones.Common.Helpers
+@inject Constants Constants
+@model GestionExpropaciones.Models.ProjectModel
+@{
+    ViewData["Title"] = "Nuevo Proyecto";
+}
+
+<form class="mt-5 fw-bold" asp-action="Create" method="post">
+    <section class="d-flex justify-content-start fw-bold mt-4">
+        <div class="form-group">
+            <label asp-for="Number">N° Proyecto@(Constants.RequiredDerorator)</label>
+            <input class="form-control" type="text" asp-for="Number" />
+            <div class="validation-texts">
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="form-group ms-4">
+            <label asp-for="Name">Nombre Proyecto@(Constants.RequiredDerorator)</label>
+            <input class="form-control" type="text" asp-for="Name" />
+            <div class="validation-texts">
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+        </div>
+    </section>  
+
+    <div class="form-group mt-2">
+        <label asp-for="Comments">@Constants.CommentsText</label>
+        <textarea class="form-control" rows="4" asp-for="Comments"></textarea>
+        <div class="validation-texts">
+            <span asp-validation-for="Comments" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-secondary mt-3 fw-bold regular-button" type="button" asp-controller="Project" asp-action="Index" method="get">
+            @IconHelper.ReturnIcon()
+        </a>
+        <button class="btn custom-button-create mt-3 fw-bold" type="submit">Crear</button>
+    </div>
+</form>

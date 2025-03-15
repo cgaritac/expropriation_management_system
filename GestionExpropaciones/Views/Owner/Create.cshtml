@@ -1,0 +1,39 @@
+﻿@using GestionExpropaciones.Common
+@using GestionExpropaciones.Common.Helpers
+@inject Constants Constants
+@model GestionExpropaciones.Models.OwnerModel
+@{
+    ViewData["Title"] = "Nuevo Propietario";
+
+    //List<ProjectModel> projectList = ViewBag.ProjectList;
+    int fileId = ViewBag.FileId;
+}
+
+<form class="mt-5 fw-bold" asp-controller="Owner" asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Identification_Number">N° Cédula@(Constants.RequiredDerorator)</label>
+        <input class="form-control custom-input" type="text" asp-for="Identification_Number" />
+        <div class="validation-texts">
+            <span asp-validation-for="Identification_Number" class="text-danger"></span>
+        </div>
+    </div>
+
+    <section class="d-flex justify-content-between fw-bold mt-1">
+        
+    </section>
+
+    <div class="form-group mt-2">
+        <label asp-for="Comments">Comentarios</label>
+        <textarea class="form-control" rows="4" asp-for="Comments"></textarea>
+        <div class="validation-texts">
+            <span asp-validation-for="Comments" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+        <a class="btn btn-secondary mt-3 fw-bold regular-button" type="button" asp-controller="Menu" asp-action="Index" method="get" asp-route-id="@fileId" asp-fragment="owner-tab">
+            @IconHelper.ReturnIcon()
+        </a>
+        <button class="btn custom-button-create mt-3 fw-bold" type="submit">Crear</button>
+    </div>
+</form>
